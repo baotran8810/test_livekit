@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String connectingStatus = "";
   Room room = Room();
   late LocalAudioTrack localAudio;
+
   @override
   void initState() {
     setState(() {
@@ -72,10 +73,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void getUserInRoom() {
     // late final _listener = room.participants.
   }
+
   void mute() {
     print("mute");
 
-    LocalTrackPublication localTrackPublication = LocalTrackPublication(participant: room.localParticipant!, info: room.engine.addTrack(cid: cid, name: name, kind: kind, source: source), track: track)
+    LocalTrackPublication localTrackPublication = LocalTrackPublication(
+        participant: room.localParticipant!,
+        info: room.engine
+            .addTrack(cid: cid, name: name, kind: kind, source: source),
+        track: track);
   }
 
   Future<void> getToken() async {
