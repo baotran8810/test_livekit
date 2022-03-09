@@ -10,6 +10,10 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  	<key>NSCameraUsageDescription</key>
+ 	<string>$(PRODUCT_NAME) uses your camera</string>
+  	<key>NSMicrophoneUsageDescription</key>
+  	<string>$(PRODUCT_NAME) uses your microphone</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
