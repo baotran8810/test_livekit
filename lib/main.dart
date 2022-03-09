@@ -64,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
         print(data);
         setState(() {
           callToken = data['access_token'];
+
           _controllerIP.text = data['uri'];
+
           print(callToken);
         });
       }
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   connect() async {
     room = await LiveKitClient.connect(_controllerIP.text, callToken);
-    print("connect");
+
     localAudio = await LocalAudioTrack.create();
     await room.localParticipant?.publishAudioTrack(localAudio);
 
