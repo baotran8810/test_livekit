@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String connectingStatus = "";
   Room room = Room();
   late LocalAudioTrack localAudio;
+  bool isMute = false;
 
   @override
   void initState() {
@@ -61,13 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
       Map eventMap = json.decode(event);
       if (eventMap['type'] == "rpc:get_join_call_token") {
         Map data = eventMap["data"];
-        print(data);
         setState(() {
           callToken = data['access_token'];
 
           _controllerIP.text = data['uri'];
-
-          print(callToken);
         });
       }
     });
@@ -75,11 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getUserInRoom() {
-    // late final _listener = room.participants.
+    print(room.participants.toString());
   }
 
-  void mute() {
-    print("mute");
+  void mute() async {
+    if (isMute) {
+      await localAudio.unmute();
+      isMute = false;
+    } else {
+      isMute = await localAudio.mute();
+      isMute = true;
+    }
+
+    print(isMute);
   }
 
   Future<void> getToken() async {
@@ -110,8 +116,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _listener.on<SpeakingChangedEvent>((e) {
       print("sdsd");
+      setState(() {
+        connectingStatus = "sadasd";
+      });
       print(e.participant.name);
       print(e.speaking);
+    });
+    _listener.on<ActiveSpeakersChangedEvent>((e) {
+      print("sdsd");
+      setState(() {
+        connectingStatus = "sadsad";
+        print(e.toString());
+      });
+    });
+
+    _listener.on<SpeakingChangedEvent>((e) {
+      setState(() {
+        // print(e.toString());
+      });
     });
     _listener
       ..on<RoomDisconnectedEvent>((_) {
